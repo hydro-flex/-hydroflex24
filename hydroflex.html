@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HydroFlex · Solicitud de latiguillo hidráulico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#0057A8;
+    --blue-dark:#003E7A;
+    --blue-tint:#EAF1F8;
+    --blue-tint-2:#F5F8FB;
+    --white:#FFFFFF;
+    --anthracite:#333333;
+    --anthracite-soft:#6B6F73;
+    --border:#DADFE3;
+    --error:#A3271D;
+    --error-tint:#FBEAE8;
+    --font-display:'Titillium Web', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+    --radius:10px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--font-body);
+    color:var(--anthracite);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;max-width:100%;}
+
+  /* ---------- Cabecera ---------- */
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:18px 24px;
+    border-bottom:3px solid var(--blue);
+    flex-wrap:wrap;
+  }
+  .logo{
+    font-family:var(--font-display);
+    font-weight:900;
+    font-size:1.7rem;
+    letter-spacing:0.5px;
+    white-space:nowrap;
+  }
+  .logo .hydro{color:var(--anthracite);}
+  .logo .flex{color:var(--blue);}
+  .topbar-tagline{
+    font-size:0.82rem;
+    color:var(--anthracite-soft);
+    text-align:right;
+  }
+
+  /* ---------- Hero / diagrama guía ---------- */
+  .hero{
+    background:var(--blue-tint);
+    padding:32px 24px 28px;
+    text-align:center;
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(1.5rem,4vw,2.1rem);
+    margin:0 0 8px;
+    color:var(--anthracite);
+  }
+  .hero p{
+    margin:0 auto 22px;
+    max-width:480px;
+    color:var(--anthracite-soft);
+    font-size:0.97rem;
+    line-height:1.45;
+  }
+  .diagram-wrap{
+    max-width:560px;
+    margin:0 auto;
+  }
+  .diagram-caption{
+    margin-top:6px;
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--anthracite-soft);
+    text-transform:uppercase;
+  }
+  .hose-fill{fill:#7A7F84;}
+  .fitting-fill{fill:var(--blue);}
+  .dim-line{stroke:var(--blue); stroke-width:2; fill:none;}
+  .dim-tick{stroke:var(--blue); stroke-width:2;}
+  .leader-line{stroke:var(--anthracite-soft); stroke-width:1.5; fill:none;}
+  .leader-line-blue{stroke:var(--blue); stroke-width:1.5; fill:none;}
+  .spec-band{fill:var(--white); stroke:#9BA0A4; stroke-width:1.5;}
+  .diagram-label{
+    font-family:var(--font-mono);
+    font-size:13px;
+    fill:var(--anthracite);
+    text-anchor:middle;
+    letter-spacing:0.03em;
+  }
+  .diagram-label-blue{
+    font-family:var(--font-mono);
+    font-size:13px;
+    fill:var(--blue);
+    font-weight:600;
+  }
+
+  /* ---------- Formulario ---------- */
+  main{
+    max-width:640px;
+    margin:0 auto;
+    padding:32px 20px 60px;
+  }
+  .section{
+    margin-bottom:30px;
+  }
+  .section-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .badge{
+    flex:0 0 auto;
+    width:28px;height:28px;
+    border-radius:50%;
+    background:var(--blue);
+    color:var(--white);
+    font-family:var(--font-mono);
+    font-weight:600;
+    font-size:0.82rem;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .section-title{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.05rem;
+    letter-spacing:0.02em;
+    text-transform:uppercase;
+    color:var(--anthracite);
+  }
+  .section-sub{
+    font-size:0.85rem;
+    color:var(--anthracite-soft);
+    margin:-6px 0 14px 38px;
+  }
+
+  .field{margin-bottom:14px;}
+  .field label{
+    display:block;
+    font-size:0.82rem;
+    font-weight:600;
+    margin-bottom:5px;
+    color:var(--anthracite);
+  }
+  .field input,
+  .field textarea{
+    width:100%;
+    padding:11px 12px;
+    font-family:var(--font-body);
+    font-size:0.95rem;
+    border:1.5px solid var(--border);
+    border-radius:var(--radius);
+    background:var(--white);
+    color:var(--anthracite);
+  }
+  .field input:focus,
+  .field textarea:focus{
+    outline:none;
+    border-color:var(--blue);
+    box-shadow:0 0 0 3px rgba(0,87,168,0.12);
+  }
+  .field textarea{resize:vertical;min-height:80px;}
+  .field-error{
+    display:none;
+    font-size:0.78rem;
+    color:var(--error);
+    margin-top:4px;
+  }
+  .field.invalid input,
+  .field.invalid textarea{border-color:var(--error);}
+  .field.invalid .field-error{display:block;}
+
+  /* ---------- Tiles de fotos ---------- */
+  .photo-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  @media (max-width:480px){
+    .photo-grid{grid-template-columns:1fr;}
+  }
+  .photo-tile.wide{grid-column:1 / -1;}
+  .photo-tile{
+    position:relative;
+    border:1.5px dashed var(--border);
+    border-radius:var(--radius);
+    background:var(--blue-tint-2);
+    padding:16px 10px;
+    text-align:center;
+    cursor:pointer;
+    min-height:128px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .photo-tile:hover{border-color:var(--blue);}
+  .photo-tile.filled{
+    border-style:solid;
+    border-color:var(--blue);
+    background:var(--anthracite);
+    padding:0;
+    overflow:hidden;
+  }
+  .photo-tile.invalid{border-color:var(--error);}
+  .photo-tile img.preview{
+    width:100%;height:128px;
+    object-fit:cover;
+  }
+  .photo-tile .tile-icon{
+    width:26px;height:26px;
+    margin-bottom:8px;
+    color:var(--blue);
+  }
+  .photo-tile .tile-label{
+    font-weight:700;
+    font-size:0.86rem;
+    color:var(--anthracite);
+  }
+  .photo-tile .tile-hint{
+    font-family:var(--font-mono);
+    font-size:0.7rem;
+    color:var(--anthracite-soft);
+    margin-top:3px;
+  }
+  .photo-tile.filled .tile-overlay{
+    position:absolute;
+    bottom:0;left:0;right:0;
+    background:linear-gradient(transparent, rgba(0,0,0,0.55));
+    color:var(--white);
+    font-size:0.74rem;
+    font-weight:600;
+    padding:14px 8px 6px;
+    text-align:left;
+  }
+  .photo-tile .remove-btn{
+    position:absolute;
+    top:6px;right:6px;
+    width:24px;height:24px;
+    border-radius:50%;
+    background:rgba(51,51,51,0.85);
+    color:var(--white);
+    border:none;
+    font-size:0.95rem;
+    line-height:1;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .photo-input{display:none;}
+
+  /* ---------- Botón enviar ---------- */
+  .submit-btn{
+    width:100%;
+    padding:15px;
+    background:var(--blue);
+    color:var(--white);
+    border:none;
+    border-radius:var(--radius);
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1rem;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+  }
+  .submit-btn:hover{background:var(--blue-dark);}
+  .submit-btn:disabled{opacity:0.65;cursor:not-allowed;}
+  .spinner{
+    width:16px;height:16px;
+    border:2.5px solid rgba(255,255,255,0.4);
+    border-top-color:var(--white);
+    border-radius:50%;
+    animation:spin .7s linear infinite;
+    display:none;
+  }
+  .submit-btn.loading .spinner{display:inline-block;}
+  .submit-btn.loading .btn-text::after{content:" enviando...";}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .progress-text{
+    text-align:center;
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    color:var(--anthracite-soft);
+    margin-top:10px;
+    min-height:1em;
+  }
+
+  .global-error{
+    display:none;
+    background:var(--error-tint);
+    border:1.5px solid var(--error);
+    border-radius:var(--radius);
+    padding:14px 16px;
+    margin-bottom:18px;
+    font-size:0.88rem;
+    color:var(--error);
+  }
+  .global-error a{color:var(--error);font-weight:600;}
+
+  /* ---------- Pantalla de éxito ---------- */
+  .success-panel{
+    display:none;
+    text-align:center;
+    padding:40px 20px 10px;
+  }
+  .success-check{
+    width:62px;height:62px;
+    border-radius:50%;
+    background:var(--blue);
+    color:var(--white);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 18px;
+  }
+  .success-panel h2{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.3rem;
+    margin:0 0 8px;
+  }
+  .success-panel p{
+    color:var(--anthracite-soft);
+    max-width:380px;
+    margin:0 auto 22px;
+    line-height:1.5;
+  }
+  .ghost-btn{
+    background:none;
+    border:1.5px solid var(--blue);
+    color:var(--blue);
+    padding:11px 22px;
+    border-radius:var(--radius);
+    font-family:var(--font-display);
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    font-size:0.85rem;
+    cursor:pointer;
+  }
+
+  footer{
+    text-align:center;
+    padding:20px;
+    font-size:0.78rem;
+    color:var(--anthracite-soft);
+    border-top:1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="logo"><span class="hydro">HYDRO</span><span class="flex">FLEX</span></div>
+    <div class="topbar-tagline">Solicitud de presupuesto<br>Latiguillos hidráulicos a medida</div>
+  </header>
+
+  <section class="hero">
+    <h1>Solicita tu latiguillo hidráulico</h1>
+    <p>Haz 5 fotos siguiendo esta guía y rellena tus datos. Revisamos las medidas y te llamamos con el presupuesto, sin que tengas que moverte del taller.</p>
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 640 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema de un latiguillo hidráulico con sus dos extremos, diámetro y longitud">
+        <!-- Racor izquierdo (Extremo 1) -->
+        <polygon class="fitting-fill" points="64,120 77,98 103,98 116,120 103,142 77,142" />
+        <!-- Manguera -->
+        <rect class="hose-fill" x="112" y="100" width="416" height="40" rx="20" />
+        <!-- textura de manguera -->
+        <g stroke="#9BA0A4" stroke-width="2" opacity="0.6">
+          <line x1="150" y1="104" x2="150" y2="136"/>
+          <line x1="195" y1="104" x2="195" y2="136"/>
+          <line x1="240" y1="104" x2="240" y2="136"/>
+          <line x1="285" y1="104" x2="285" y2="136"/>
+          <line x1="355" y1="104" x2="355" y2="136"/>
+          <line x1="400" y1="104" x2="400" y2="136"/>
+          <line x1="445" y1="104" x2="445" y2="136"/>
+          <line x1="490" y1="104" x2="490" y2="136"/>
+        </g>
+        <!-- Racor derecho (Extremo 2) -->
+        <polygon class="fitting-fill" points="524,120 537,98 563,98 576,120 563,142 537,142" />
+
+        <!-- Etiqueta impresa de especificaciones (Dn / bar) -->
+        <rect class="spec-band" x="400" y="104" width="56" height="32" rx="4" />
+        <line x1="408" y1="114" x2="448" y2="114" stroke="#9BA0A4" stroke-width="2"/>
+        <line x1="408" y1="126" x2="438" y2="126" stroke="#9BA0A4" stroke-width="2"/>
+        <path class="leader-line-blue" d="M428,104 L428,78" />
+        <text class="diagram-label-blue" x="428" y="68">DN / BAR</text>
+
+        <!-- Leader Extremo 1 -->
+        <path class="leader-line" d="M90,98 L90,52" />
+        <text class="diagram-label" x="90" y="42">EXTREMO 1</text>
+
+        <!-- Leader Extremo 2 -->
+        <path class="leader-line" d="M550,98 L550,52" />
+        <text class="diagram-label" x="550" y="42">EXTREMO 2</text>
+
+        <!-- Diámetro -->
+        <line class="dim-line" x1="320" y1="100" x2="320" y2="140" />
+        <line class="dim-tick" x1="312" y1="100" x2="328" y2="100" />
+        <line class="dim-tick" x1="312" y1="140" x2="328" y2="140" />
+        <text class="diagram-label-blue" x="345" y="124">Ø DIÁMETRO</text>
+
+        <!-- Longitud -->
+        <line class="dim-line" x1="90" y1="185" x2="550" y2="185" />
+        <line class="dim-tick" x1="90" y1="177" x2="90" y2="193" />
+        <line class="dim-tick" x1="550" y1="177" x2="550" y2="193" />
+        <text class="diagram-label-blue" x="320" y="210">LONGITUD TOTAL</text>
+      </svg>
+      <div class="diagram-caption">Así identificamos tu latiguillo a partir de las 5 fotos</div>
+    </div>
+  </section>
+
+  <main>
+    <div class="global-error" id="globalError">
+      No se ha podido enviar la solicitud. Comprueba tu conexión a internet e inténtalo de nuevo.
+      Si el problema continúa, puedes escribirnos directamente.
+    </div>
+
+    <form id="hoseForm" novalidate>
+
+      <div class="section">
+        <div class="section-head">
+          <div class="badge">01</div>
+          <div class="section-title">Tus datos</div>
+        </div>
+
+        <div class="field" id="field-nombre">
+          <label for="nombre">Nombre y taller *</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez — Chapa y Pintura Pérez" required>
+          <div class="field-error">Indica tu nombre.</div>
+        </div>
+
+        <div class="field" id="field-email">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+          <div class="field-error">Introduce un email válido.</div>
+        </div>
+
+        <div class="field" id="field-telefono">
+          <label for="telefono">Teléfono *</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="600 000 000" required>
+          <div class="field-error">Indica un teléfono de contacto.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <div class="badge">02</div>
+          <div class="section-title">Fotos del latiguillo</div>
+        </div>
+        <div class="section-sub">Toca cada casilla para hacer la foto o elegirla de tu galería.</div>
+
+        <div class="photo-grid">
+
+          <div class="photo-tile" data-key="extremo1" tabindex="0">
+            <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h2l1.5-2h9L18 7h2a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V8a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.3"/></svg>
+            <div class="tile-label">Extremo 1</div>
+            <div class="tile-hint">rosca / racor</div>
+            <input class="photo-input" type="file" accept="image/*" data-key="extremo1">
+          </div>
+
+          <div class="photo-tile" data-key="extremo2" tabindex="0">
+            <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h2l1.5-2h9L18 7h2a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V8a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.3"/></svg>
+            <div class="tile-label">Extremo 2</div>
+            <div class="tile-hint">rosca / racor</div>
+            <input class="photo-input" type="file" accept="image/*" data-key="extremo2">
+          </div>
+
+          <div class="photo-tile" data-key="diametro" tabindex="0">
+            <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h2l1.5-2h9L18 7h2a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V8a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.3"/></svg>
+            <div class="tile-label">Diámetro</div>
+            <div class="tile-hint">manguera + regla</div>
+            <input class="photo-input" type="file" accept="image/*" data-key="diametro">
+          </div>
+
+          <div class="photo-tile" data-key="especificaciones" tabindex="0">
+            <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h2l1.5-2h9L18 7h2a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V8a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.3"/></svg>
+            <div class="tile-label">Especificaciones</div>
+            <div class="tile-hint">Dn, bares, norma</div>
+            <input class="photo-input" type="file" accept="image/*" data-key="especificaciones">
+          </div>
+
+          <div class="photo-tile wide" data-key="longitud" tabindex="0">
+            <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h2l1.5-2h9L18 7h2a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V8a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.3"/></svg>
+            <div class="tile-label">Longitud</div>
+            <div class="tile-hint">extendida + metro</div>
+            <input class="photo-input" type="file" accept="image/*" data-key="longitud">
+          </div>
+
+        </div>
+        <div class="field-error" id="photoError" style="display:none;margin-top:10px;">Añade las 5 fotos antes de enviar.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <div class="badge">03</div>
+          <div class="section-title">Notas y envío</div>
+        </div>
+
+        <div class="field" id="field-localidad">
+          <label for="localidad">Localidad y provincia *</label>
+          <input type="text" id="localidad" name="localidad" placeholder="Ej. Ciudad Real, Castilla-La Mancha" required>
+          <div class="field-error">Indica tu localidad y provincia para calcular el envío.</div>
+        </div>
+
+        <div class="field" style="margin-bottom:0;">
+          <label for="notas">Notas (opcional)</label>
+          <textarea id="notas" name="notas" placeholder="Presión de trabajo, marca, urgencia, uso del vehículo o maquinaria…"></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span class="spinner"></span>
+        <span class="btn-text">Enviar solicitud</span>
+      </button>
+      <div class="progress-text" id="progressText"></div>
+    </form>
+
+    <div class="success-panel" id="successPanel">
+      <div class="success-check">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <h2>Solicitud enviada</h2>
+      <p>Hemos recibido tus fotos y tus datos. Te llamaremos en breve con el presupuesto de tu latiguillo.</p>
+      <button type="button" class="ghost-btn" id="resetBtn">Enviar otra solicitud</button>
+    </div>
+  </main>
+
+  <footer>
+    © HydroFlex — Latiguillos hidráulicos a medida
+  </footer>
+
+<script>
+/* ======================================================================
+   CONFIGURACIÓN DE TELEGRAM — rellena estos dos valores antes de publicar
+   ======================================================================
+   1) Abre Telegram y busca a "@BotFather" → escribe /newbot → sigue los
+      pasos → te dará un TOKEN (algo así como 7123456789:AAH...).
+   2) Para el CHAT_ID: escríbele un mensaje cualquiera a tu bot nuevo,
+      luego abre en el navegador:
+      https://api.telegram.org/bot<TU_TOKEN>/getUpdates
+      y busca "chat":{"id": ...}  → ese número es tu CHAT_ID.
+      (Alternativa rápida: habla con @userinfobot en Telegram, te dará
+      tu chat_id directamente).
+   ====================================================================== */
+const TELEGRAM_BOT_TOKEN = "8695977724:AAGhoMfgjOq7AJkoop0mOzHNQ1X2jC39WpA";
+const TELEGRAM_CHAT_ID   = "1095153067";
+
+const TELEGRAM_API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
+
+const photoMeta = {
+  extremo1: "Extremo 1 (rosca/racor)",
+  extremo2: "Extremo 2 (rosca/racor)",
+  diametro: "Diámetro de la manguera",
+  especificaciones: "Especificaciones (Dn / bar / norma)",
+  longitud: "Longitud total"
+};
+
+const photos = { extremo1: null, extremo2: null, diametro: null, especificaciones: null, longitud: null };
+
+// ---- Interacción con las casillas de foto ----
+function labelFor(key){
+  return ({extremo1:'Extremo 1', extremo2:'Extremo 2', diametro:'Diámetro', especificaciones:'Especificaciones', longitud:'Longitud'})[key];
+}
+function hintFor(key){
+  return ({extremo1:'rosca / racor', extremo2:'rosca / racor', diametro:'manguera + regla', especificaciones:'Dn, bares, norma', longitud:'extendida + metro'})[key];
+}
+function tileIconSVG(){
+  return '<svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h2l1.5-2h9L18 7h2a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V8a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.3"/></svg>';
+}
+function emptyTileMarkup(key){
+  return `${tileIconSVG()}<div class="tile-label">${labelFor(key)}</div><div class="tile-hint">${hintFor(key)}</div><input class="photo-input" type="file" accept="image/*" data-key="${key}">`;
+}
+
+function attachTileHandlers(tile){
+  const key = tile.dataset.key;
+  const input = tile.querySelector('.photo-input');
+
+  tile.onclick = () => input.click();
+  tile.onkeypress = (e) => { if (e.key === 'Enter') input.click(); };
+
+  input.onchange = () => {
+    const file = input.files[0];
+    if (!file) return;
+    photos[key] = file;
+    tile.classList.add('filled');
+    tile.classList.remove('invalid');
+
+    const previewSrc = URL.createObjectURL(file);
+    tile.innerHTML = `<img class="preview" src="${previewSrc}"><div class="tile-overlay">${labelFor(key)}</div>`;
+
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'remove-btn';
+    removeBtn.innerHTML = '&times;';
+    removeBtn.onclick = (e) => { e.stopPropagation(); photos[key] = null; rebuildTile(tile, key); };
+    tile.appendChild(removeBtn);
+  };
+}
+
+function rebuildTile(tile, key){
+  tile.classList.remove('filled', 'invalid');
+  tile.innerHTML = emptyTileMarkup(key);
+  attachTileHandlers(tile);
+}
+
+document.querySelectorAll('.photo-tile').forEach(tile => attachTileHandlers(tile));
+
+// ---- Compresión de imágenes antes de enviarlas ----
+async function compressImage(file, maxDim = 1280, quality = 0.82) {
+  try {
+    const bitmap = await createImageBitmap(file);
+    let { width, height } = bitmap;
+    if (width > maxDim || height > maxDim) {
+      if (width > height) { height = Math.round(height * maxDim / width); width = maxDim; }
+      else { width = Math.round(width * maxDim / height); height = maxDim; }
+    }
+    const canvas = document.createElement('canvas');
+    canvas.width = width; canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(bitmap, 0, 0, width, height);
+    return await new Promise(resolve => canvas.toBlob(b => resolve(b || file), 'image/jpeg', quality));
+  } catch (e) {
+    return file; // si falla la compresión, se envía el archivo original
+  }
+}
+
+// ---- Envío a Telegram ----
+async function sendTelegramMessage(text) {
+  const res = await fetch(`${TELEGRAM_API}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: 'HTML' })
+  });
+  if (!res.ok) throw new Error('No se pudo enviar el mensaje a Telegram');
+}
+
+async function sendTelegramPhoto(blob, caption) {
+  const formData = new FormData();
+  formData.append('chat_id', TELEGRAM_CHAT_ID);
+  formData.append('caption', caption);
+  formData.append('photo', blob, 'foto.jpg');
+  const res = await fetch(`${TELEGRAM_API}/sendPhoto`, { method: 'POST', body: formData });
+  if (!res.ok) throw new Error('No se pudo enviar una foto a Telegram');
+}
+
+// ---- Validación ----
+function setFieldInvalid(fieldId, invalid) {
+  document.getElementById(fieldId).classList.toggle('invalid', invalid);
+}
+
+function validateForm() {
+  let valid = true;
+  const nombre = document.getElementById('nombre').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const telefono = document.getElementById('telefono').value.trim();
+
+  setFieldInvalid('field-nombre', nombre.length === 0);
+  if (nombre.length === 0) valid = false;
+
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  setFieldInvalid('field-email', !emailOk);
+  if (!emailOk) valid = false;
+
+  setFieldInvalid('field-telefono', telefono.length < 6);
+  if (telefono.length < 6) valid = false;
+
+  const localidad = document.getElementById('localidad').value.trim();
+  setFieldInvalid('field-localidad', localidad.length === 0);
+  if (localidad.length === 0) valid = false;
+
+  const missingPhotos = Object.values(photos).some(p => !p);
+  document.getElementById('photoError').style.display = missingPhotos ? 'block' : 'none';
+  document.querySelectorAll('.photo-tile').forEach(tile => {
+    tile.classList.toggle('invalid', !photos[tile.dataset.key]);
+  });
+  if (missingPhotos) valid = false;
+
+  return valid;
+}
+
+// ---- Envío del formulario ----
+const form = document.getElementById('hoseForm');
+const submitBtn = document.getElementById('submitBtn');
+const progressText = document.getElementById('progressText');
+const globalError = document.getElementById('globalError');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  globalError.style.display = 'none';
+
+  if (!validateForm()) return;
+
+  if (TELEGRAM_BOT_TOKEN.includes('PON_AQUI') || TELEGRAM_CHAT_ID.includes('PON_AQUI')) {
+    globalError.textContent = 'Falta configurar el bot de Telegram en el código (TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID).';
+    globalError.style.display = 'block';
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.classList.add('loading');
+
+  const nombre = document.getElementById('nombre').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const telefono = document.getElementById('telefono').value.trim();
+  const localidad = document.getElementById('localidad').value.trim();
+  const notas = document.getElementById('notas').value.trim();
+
+  try {
+    progressText.textContent = 'Enviando datos de contacto…';
+    const resumen =
+      `🔧 <b>Nueva solicitud de latiguillo</b>\n` +
+      `👤 Nombre: ${escapeHtml(nombre)}\n` +
+      `📧 Email: ${escapeHtml(email)}\n` +
+      `📞 Teléfono: ${escapeHtml(telefono)}\n` +
+      `📍 Localidad/Provincia (envío): ${escapeHtml(localidad)}\n` +
+      (notas ? `📝 Notas: ${escapeHtml(notas)}\n` : '') +
+      `🕐 ${new Date().toLocaleString('es-ES')}`;
+    await sendTelegramMessage(resumen);
+
+    const order = ['extremo1', 'extremo2', 'diametro', 'especificaciones', 'longitud'];
+    for (let i = 0; i < order.length; i++) {
+      const key = order[i];
+      progressText.textContent = `Enviando foto ${i + 1} de 4 (${labelFor(key)})…`;
+      const compressed = await compressImage(photos[key]);
+      await sendTelegramPhoto(compressed, `${photoMeta[key]} — ${nombre}`);
+    }
+
+    progressText.textContent = '';
+    form.style.display = 'none';
+    document.getElementById('successPanel').style.display = 'block';
+  } catch (err) {
+    console.error(err);
+    globalError.innerHTML =
+      'No se ha podido enviar la solicitud. Comprueba tu conexión e inténtalo de nuevo. ' +
+      `Si sigue sin funcionar, escríbenos directamente a <a href="mailto:jorgeceliscuenda@gmail.com">jorgeceliscuenda@gmail.com</a>.`;
+    globalError.style.display = 'block';
+    progressText.textContent = '';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.classList.remove('loading');
+  }
+});
+
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  form.reset();
+  Object.keys(photos).forEach(k => photos[k] = null);
+  document.querySelectorAll('.photo-tile').forEach(tile => rebuildTile(tile, tile.dataset.key));
+  document.querySelectorAll('.field').forEach(f => f.classList.remove('invalid'));
+  document.getElementById('successPanel').style.display = 'none';
+  form.style.display = 'block';
+});
+</script>
+</body>
+</html>
